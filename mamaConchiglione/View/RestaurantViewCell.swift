@@ -8,13 +8,15 @@ class RestaurantViewCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-            contentView.layer.cornerRadius = 15
-            contentView.backgroundColor = .white
-            addSubviews()
-            setupRestaurantPhoto()
-            displayRestaurantPhoto()
-            setupRestaurantName()
-            displayRestaurantName()
+        contentView.layer.cornerRadius = 15
+        contentView.backgroundColor = .white
+        addSubviews()
+        setupRestaurantPhoto()
+        displayRestaurantPhoto()
+        setupRestaurantName()
+        displayRestaurantName()
+        setupDateVisited()
+        displayDateVisited()
     }
 
     
@@ -63,15 +65,23 @@ class RestaurantViewCell: UICollectionViewCell {
                                    orientation: sourceImage.imageOrientation)
         
         restaurantPhoto.image = croppedImage
+        
+        restaurantPhoto.layer.cornerRadius = 15
 
     }
     
     private func displayRestaurantPhoto() {
         NSLayoutConstraint.activate([
-            restaurantPhoto.topAnchor.constraint(equalTo: self.topAnchor, constant: 20),
-            restaurantPhoto.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 0.7),
+            restaurantPhoto.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 20),
+            restaurantPhoto.widthAnchor.constraint(equalToConstant: 116),
             restaurantPhoto.heightAnchor.constraint(equalTo: restaurantPhoto.widthAnchor),
-            restaurantPhoto.centerXAnchor.constraint(equalTo: self.centerXAnchor)
+            restaurantPhoto.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+            restaurantPhoto.leadingAnchor.constraint(
+                equalTo: contentView.leadingAnchor,
+                constant: 25),
+            restaurantPhoto.trailingAnchor	.constraint(
+                equalTo: contentView.trailingAnchor	,
+                constant: -25)
         ])
     }
     
@@ -79,6 +89,7 @@ class RestaurantViewCell: UICollectionViewCell {
         restaurantName.font = UIFont.boldSystemFont(ofSize: 20)
         restaurantName.textColor = UIColor(named: "Gray")
         restaurantName.textAlignment = .center
+        restaurantName.numberOfLines = 0
     }
     
     private func displayRestaurantName() {
@@ -99,8 +110,11 @@ class RestaurantViewCell: UICollectionViewCell {
     private func displayDateVisited() {
         NSLayoutConstraint.activate([
             dateVisited.topAnchor.constraint(equalTo: restaurantName.bottomAnchor, constant: 20),
-            dateVisited.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 0.8),
-            dateVisited.centerXAnchor.constraint(equalTo: contentView.centerXAnchor)
+            dateVisited.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
+            dateVisited.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
+            dateVisited.bottomAnchor.constraint(
+                equalTo: contentView.bottomAnchor,
+                constant: -20)
         ])
     }
 }

@@ -40,7 +40,9 @@ class YourRestaurantsViewController: UIViewController {
     
     
     lazy var restaurantsCollectionView: UICollectionView = {
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewLayout())
+        let layout = UICollectionViewFlowLayout()
+        layout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.register(RestaurantViewCell.self, forCellWithReuseIdentifier: "RestaurantViewCell")
         collectionView.backgroundColor = .white
         collectionView.delegate = self
@@ -105,9 +107,9 @@ class YourRestaurantsViewController: UIViewController {
         
         NSLayoutConstraint.activate([
             restaurantsCollectionView.topAnchor.constraint(equalTo: yourRestaurantsTitle.bottomAnchor, constant: 20),
-            restaurantsCollectionView.widthAnchor.constraint(equalTo: self.view.widthAnchor, multiplier: 0.8),
+            restaurantsCollectionView.widthAnchor.constraint(equalTo: self.view.widthAnchor, multiplier: 0.9),
             restaurantsCollectionView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
-            restaurantsCollectionView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: 20)
+            restaurantsCollectionView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor)
             
         ])
         
@@ -117,25 +119,7 @@ class YourRestaurantsViewController: UIViewController {
    
 }
 
-extension YourRestaurantsViewController {
-    private func collectionViewLayout() -> UICollectionViewLayout {
-        let layout = UICollectionViewFlowLayout()
-        let cellWidthHeightConstant: CGFloat = UIScreen.main.bounds.width * 0.2
-        
-        layout.sectionInset = UIEdgeInsets(top: 0,
-                                           left: 10,
-                                           bottom: 0,
-                                           right: 10)
-        layout.scrollDirection = .vertical
-        layout.minimumInteritemSpacing = 15
-        layout.minimumLineSpacing = 15
-        layout.itemSize = CGSize(width: cellWidthHeightConstant, height: cellWidthHeightConstant)
-        
-        return layout
-    }
-}
-
-extension YourRestaurantsViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+extension YourRestaurantsViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return restaurantNames.count
     }
@@ -146,6 +130,4 @@ extension YourRestaurantsViewController: UICollectionViewDelegate, UICollectionV
         cell.restaurantName.text = restaurantName
         return cell
     }
-    
-    
 }

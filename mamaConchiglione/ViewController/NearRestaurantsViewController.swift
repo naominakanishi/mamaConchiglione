@@ -39,7 +39,11 @@ class NearRestaurantsViewController: UIViewController {
     
     lazy var nearRestaurantsTableView: UITableView = {
         let tableView = UITableView()
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.register(RestaurantTableViewCell.self, forCellReuseIdentifier: "RestaurantTableViewCell")
         tableView.tableFooterView = UIView()
+        tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
     }()
     
@@ -89,11 +93,34 @@ class NearRestaurantsViewController: UIViewController {
     private func displayTableView() {
         NSLayoutConstraint.activate([
             nearRestaurantsTableView.topAnchor.constraint(equalTo: nearRestaurantsTitle.bottomAnchor, constant: vSpacing),
-            nearRestaurantsTableView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.8),
+            nearRestaurantsTableView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.9),
             nearRestaurantsTableView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             nearRestaurantsTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -20)
         ])
+        
+        nearRestaurantsTableView.backgroundColor = .clear
     }
     
    
+}
+
+extension NearRestaurantsViewController: UITableViewDelegate, UITableViewDataSource {
+    
+    
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return restaurantNames.count
+    }
+    
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "RestaurantTableViewCell") as! RestaurantTableViewCell
+        let restaurantName = restaurantNames[indexPath.row]
+        cell.restaurantName.text = restaurantName
+        return cell
+    }
 }

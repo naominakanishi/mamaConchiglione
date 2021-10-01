@@ -7,14 +7,23 @@ class RestaurantTableViewCell: UITableViewCell {
     let restaurantDistance = UILabel()
     let foodType = UILabel()
     
-    let photoMargin: CGFloat = 15
+    let photoMargin: CGFloat = 20
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         contentView.layer.cornerRadius = 15
         contentView.backgroundColor = .white
-        
+        contentView.translatesAutoresizingMaskIntoConstraints = false
         addSubviews()
+        setupFoodType()
+        setupRestaurantPhoto()
+        displayRestaurantPhoto()
+        setupRestaurantName()
+        displayRestaurantName()
+        setupRestaurantDistance()
+        displayRestaurantDistance()
+        setupFoodType()
+        displayFoodType()
     }
         
         required init?(coder: NSCoder) {
@@ -65,13 +74,17 @@ class RestaurantTableViewCell: UITableViewCell {
                                    orientation: sourceImage.imageOrientation)
         
         restaurantPhoto.image = croppedImage
+        restaurantPhoto.layer.cornerRadius = 15
     }
     
     private func displayRestaurantPhoto() {
         NSLayoutConstraint.activate([
             restaurantPhoto.topAnchor.constraint(equalTo: contentView.topAnchor, constant: photoMargin),
-            restaurantName.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: photoMargin),
-            restaurantName.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: photoMargin)
+            restaurantPhoto.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -photoMargin),
+            restaurantPhoto.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: photoMargin),
+            restaurantPhoto.widthAnchor.constraint(equalToConstant: 60),
+            restaurantPhoto.heightAnchor.constraint(equalToConstant: 60)
+            
         ])
     }
     
@@ -98,7 +111,7 @@ class RestaurantTableViewCell: UITableViewCell {
     
     private func displayRestaurantDistance() {
         NSLayoutConstraint.activate([
-            restaurantDistance.topAnchor.constraint(equalTo: restaurantName.bottomAnchor, constant: 10),
+            restaurantDistance.topAnchor.constraint(equalTo: restaurantName.bottomAnchor),
             restaurantDistance.leadingAnchor.constraint(equalTo: restaurantName.leadingAnchor),
             restaurantDistance.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -photoMargin)
         ])
@@ -117,5 +130,4 @@ class RestaurantTableViewCell: UITableViewCell {
             foodType.bottomAnchor.constraint(equalTo: restaurantDistance.bottomAnchor)
         ])
     }
-    
 }
